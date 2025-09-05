@@ -1,0 +1,9 @@
+../PeripheralDriver/Src/servo.c:15:6:Servo_Init	1
+../PeripheralDriver/Src/servo.c:25:6:Servo_turnRight	1
+../PeripheralDriver/Src/servo.c:29:6:Servo_turnLeft	1
+../PeripheralDriver/Src/servo.c:33:6:Servo_fixLeft	1
+../PeripheralDriver/Src/servo.c:37:6:Servo_fixRight	1
+../PeripheralDriver/Src/servo.c:41:6:Servo_Centre	1
+../PeripheralDriver/Src/servo.c:45:6:Servo_mildRight	1
+../PeripheralDriver/Src/servo.c:53:6:Servo_mildLeft	1
+../PeripheralDriver/Src/servo.c:57:6:Servo_R_turnRight	1
