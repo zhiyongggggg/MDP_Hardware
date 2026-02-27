@@ -24,7 +24,7 @@
 #define FIX_LEFT_SERVO_DUTY 140 //60
 #define FIX_RIGHT_SERVO_DUTY 157 //152
 
-#define MILD_RIGHT 139 //148
+#define MILD_RIGHT 129 //148
 //#define MILD_CENTER_RIGHT 147 //110
 #define MILD_LEFT 129 //146
 //
