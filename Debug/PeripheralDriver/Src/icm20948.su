@@ -1,0 +1,4 @@
+../PeripheralDriver/Src/icm20948.c:15:5:IMU_Init	40	static
+../PeripheralDriver/Src/icm20948.c:160:5:IMU_Read	40	static
+../PeripheralDriver/Src/icm20948.c:198:5:Magnetometer_Read	40	static
+../PeripheralDriver/Src/icm20948.c:256:5:Magnetometer_Write	40	static

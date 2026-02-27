@@ -1,0 +1,6 @@
+../PeripheralDriver/Src/UART_Comm.c:32:6:UART_Comm_Init	16	static
+../PeripheralDriver/Src/UART_Comm.c:41:6:HAL_UARTEx_RxEventCallback	16	static
+../PeripheralDriver/Src/UART_Comm.c:90:6:UART_send_string	24	static
+../PeripheralDriver/Src/UART_Comm.c:96:6:UART_send_char	16	static
+../PeripheralDriver/Src/UART_Comm.c:110:6:Get_Buffer	16	static
+../PeripheralDriver/Src/UART_Comm.c:117:6:Clear_Buffer	8	static

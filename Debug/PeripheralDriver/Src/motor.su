@@ -1,0 +1,10 @@
+../PeripheralDriver/Src/motor.c:15:6:Motor_Init	24	static
+../PeripheralDriver/Src/motor.c:35:6:Motor_Stop	4	static
+../PeripheralDriver/Src/motor.c:43:6:Motor_Forward	16	static
+../PeripheralDriver/Src/motor.c:55:6:Motor_LF_RB	16	static
+../PeripheralDriver/Src/motor.c:70:6:Motor_RF_LB	16	static
+../PeripheralDriver/Src/motor.c:85:6:Motor_Reverse	16	static
+../PeripheralDriver/Src/motor.c:99:6:Motor_turnLeft	16	static
+../PeripheralDriver/Src/motor.c:113:6:Motor_turnRight	16	static
+../PeripheralDriver/Src/motor.c:127:6:Motor_RturnRight	16	static
+../PeripheralDriver/Src/motor.c:141:6:Get_Encoder	40	static
