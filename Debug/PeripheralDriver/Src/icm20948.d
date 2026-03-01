@@ -1,5 +1,5 @@
 PeripheralDriver/Src/icm20948.o: ../PeripheralDriver/Src/icm20948.c \
- /Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/icm20948.h \
+ C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/icm20948.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
@@ -30,7 +30,7 @@ PeripheralDriver/Src/icm20948.o: ../PeripheralDriver/Src/icm20948.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-/Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/icm20948.h:
+C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/icm20948.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h:
 ../Drivers/CMSIS/Include/core_cm4.h:

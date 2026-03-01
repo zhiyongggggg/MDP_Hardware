@@ -1334,7 +1334,7 @@ void servo_motor(void *argument)
   double reverse_compensation_delay = 15;
   int16_t offset_from_center;
   int16_t requested_vertical_displacement = 0;
-  int multiplier = 100; //100
+  int multiplier = 100;
   int offset = 0;
   int distance = 0;
   int IR_value = 0;
@@ -1376,8 +1376,79 @@ void servo_motor(void *argument)
 		  osDelay(500);
 	  }
 
+	  // SPOT TURN LEFT
+	  else if((strncmp("spot", (char*)command_buffer, 4) == 0) && (strstr((char *)command_buffer, "left") != NULL)){
 
+		  requested_angle = getRequestedAngle(command_buffer);
+          target_Orientation = orientation + requested_angle;
+          reverse_target_Orientation = orientation + requested_angle/2;
+          multiplier = 70;
 
+          sprintf(motor_command, "%s", stop);
+          osDelay(100);
+		  Servo_turnRight();
+		  osDelay(200);
+		  sprintf(motor_command, "%s,%d", reverse_left, multiplier);
+
+          while(orientation < reverse_target_Orientation){
+        	  osDelay(delay_time);
+          }
+          sprintf(motor_command,"%s",stop);
+          osDelay(100);
+          Servo_turnLeft();
+          osDelay(200);
+          sprintf(motor_command, "%s,%d", left, multiplier);
+
+          while (orientation < target_Orientation){
+        	  osDelay(delay_time);
+          }
+          sprintf(motor_command,"%s",stop);
+
+          osDelay(200);
+          Servo_Centre();
+          osDelay(200);
+		  sprintf(motor_command,"%s",stop);
+		  sprintf(command_buffer,"%s",dummy_command_stop);
+		  UART_send_string(movement_finish);
+		  sendPosOrienData();
+		  osDelay(200);
+	  }
+
+	  else if ((strncmp("spot", (char*)command_buffer, 4) == 0) && (strstr((char *)command_buffer, "right") != NULL)){
+		  requested_angle = -getRequestedAngle(command_buffer);
+          target_Orientation = orientation + requested_angle;
+          reverse_target_Orientation = orientation + requested_angle/2;
+          multiplier = 70;
+
+          sprintf(motor_command, "%s", stop);
+          osDelay(100);
+		  Servo_turnLeft();
+		  osDelay(200);
+		  sprintf(motor_command, "%s,%d", reverse_right, multiplier);
+
+          while(orientation > reverse_target_Orientation){
+        	  osDelay(delay_time);
+          }
+          sprintf(motor_command,"%s",stop);
+          osDelay(100);
+          Servo_turnRight();
+          osDelay(200);
+          sprintf(motor_command, "%s,%d", right, multiplier);
+
+          while (orientation > target_Orientation){
+        	  osDelay(delay_time);
+          }
+          sprintf(motor_command,"%s",stop);
+
+          osDelay(200);
+          Servo_Centre();
+          osDelay(200);
+		  sprintf(motor_command,"%s",stop);
+		  sprintf(command_buffer,"%s",dummy_command_stop);
+		  UART_send_string(movement_finish);
+		  sendPosOrienData();
+		  osDelay(200);
+	  }
 
 	  //Forward Right turn - FIXED VERSION
 	  else if ((strncmp("right", (char*)command_buffer, 5) == 0) && (strstr((char*)command_buffer, "forward") != NULL)){
@@ -1558,214 +1629,188 @@ void servo_motor(void *argument)
 		  osDelay(100);
 	  }
 	  else if((strncmp("center", (char*)command_buffer, 6) == 0) && (strstr((char *)command_buffer, "reverse") != NULL)){
-	      Servo_Centre();
-	      int16_t center = 0;
-	      requested_angle = 0;
-	      requested_vertical_displacement = getRequestedVerticalDisplacement(command_buffer);
-	      target_Orientation = orientation + requested_angle + (-0.05)/100*requested_vertical_displacement;
+		  //IF COMMAND IS GO STRAIGHT
+		  Servo_Centre();
+		  int16_t center = 0;
+		  requested_angle = 0;
+		  requested_vertical_displacement = getRequestedVerticalDisplacement(command_buffer);
+		  target_Orientation = orientation + requested_angle + (-0.05)/100*requested_vertical_displacement;
+		  if(requested_vertical_displacement>50){
+			  requested_vertical_displacement = requested_vertical_displacement-2.5;
+		  }
+		  else{
+			  requested_vertical_displacement = requested_vertical_displacement -0.40;
+		  }
+		  initial_x_pos = x_pos;
+		  initial_y_pos = y_pos;
+		  if (requested_vertical_displacement<=10)  Servo_Centre();
+		  else Servo_Centre();
+		  sprintf(motor_command, "%s,%d", reverse, multiplier);
+		  center = orientation - target_Orientation;
+		  while (euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) < requested_vertical_displacement){
+				offset_from_center = orientation - target_Orientation;
+				if (offset_from_center == 0){
+					Servo_Centre();
+				}
+				offset_from_center = orientation - target_Orientation;
+//				if (offset_from_center > 0.05){
+//					center++;
+//					Servo_mildRight();
+//					offset_from_center = 0;
+//				}
 
-	      if(requested_vertical_displacement>50){
-	          requested_vertical_displacement = requested_vertical_displacement-2.5;
-	      }
-	      else{
-	          requested_vertical_displacement = requested_vertical_displacement -0.40;
-	      }
+				//means robot leaning to the right
+//				if (offset_from_center < -0.5){
+//					center--;
+//					Servo_mildLeft();
+//					offset_from_center = 0;
+//				}
+				if (euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) > requested_vertical_displacement - 20){
+					//add a multiplier
+					multiplier = 40;
+					sprintf(motor_command, "%s,%d", reverse, multiplier);
+				}
+				osDelay(6);
+			}
+		  	  Servo_Centre();
+			  sprintf(motor_command, "%s", stop);
+			  sprintf(command_buffer,"%s",stop);
 
-	      initial_x_pos = x_pos;
-	      initial_y_pos = y_pos;
-	      if (requested_vertical_displacement<=10)  Servo_Centre();
-	      else Servo_Centre();
-	      sprintf(motor_command, "%s,%d", reverse, multiplier);
+		  osDelay(100);
+		  sendPosOrienData();
+		  osDelay(100);
 
-	      while (euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) < requested_vertical_displacement){
-	          offset_from_center = orientation - target_Orientation;
-
-	          if (offset_from_center == 0){
-	              Servo_Centre();
-	          }
-
-	          // REVERSE STEERING: corrections are opposite of forward
-	          if (offset_from_center > 0.5){
-	              Servo_mildLeft();  // Reversed from forward
-	          }
-	          else if (offset_from_center < -0.5){
-	              Servo_mildRight(); // Reversed from forward
-	          }
-	          else {
-	              Servo_Centre();
-	          }
-
-	          if (euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) > requested_vertical_displacement - 20){
-	              multiplier = 40;
-	              sprintf(motor_command, "%s,%d", reverse, multiplier);
-	          }
-	          osDelay(6);
-	      }
-
-	      Servo_Centre();
-	      sprintf(motor_command, "%s", stop);
-	      sprintf(command_buffer,"%s",stop);
-	      osDelay(100);
-	      sendPosOrienData();
-	      osDelay(100);
 	  }
 
-	  // Spot turn left
-	  else if((strncmp("spot", (char*)command_buffer, 4) == 0) && (strstr((char*)command_buffer, "left") != NULL)){
-	      requested_angle = getRequestedAngle(command_buffer);
-	      offset = -1.5;  // Adjust as needed
-	      target_Orientation = orientation + requested_angle + offset;
+	  // Obstacle movement sequence
+	  else if(strncmp("obstacle", (char*)command_buffer, 8) == 0){
 
-	      sprintf(motor_command, "%s", stop);
-	      Servo_Centre();  // Keep servo centered for spot turn
-	      osDelay(10);
+		    int repeat_count = getRepeatCount(command_buffer);
+		    int multiplier_obstacle = 200;
 
-	      sprintf(motor_command, "%s,%d", "spot_left", multiplier);
+		    for(int cycle = 0; cycle < repeat_count; cycle++){
 
-	      while (orientation < target_Orientation){
-	          if (orientation > target_Orientation - 10){
-	              multiplier = 30;
-	              sprintf(motor_command, "%s,%d", "spot_left", multiplier);
-	          }
-	          osDelay(3);
-	      }
+		        // Step 1: Move forward
+		        sprintf(motor_command, "%s,%d", forward, multiplier_obstacle);
 
-	      sprintf(motor_command, "%s", stop);
-	      sprintf(command_buffer, "%s", dummy_command_stop);
-	      osDelay(200);
-	      sendPosOrienData();
-	      osDelay(100);
-	  }
+		        initial_x_pos = x_pos;
+		        initial_y_pos = y_pos;
+		        requested_vertical_displacement = 5; // Forward distance
 
-//	  // Obstacle movement sequence
-//	  else if(strncmp("obstacle", (char*)command_buffer, 8) == 0){
-//
-//		    int repeat_count = getRepeatCount(command_buffer);
-//		    int multiplier_obstacle = 200;
-//
-//		    for(int cycle = 0; cycle < repeat_count; cycle++){
-//
-//		        // Step 1: Move forward
-//		        sprintf(motor_command, "%s,%d", forward, multiplier_obstacle);
-//
-//		        initial_x_pos = x_pos;
-//		        initial_y_pos = y_pos;
-//		        requested_vertical_displacement = 5; // Forward distance
-//
-//		        while(euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) < requested_vertical_displacement){
-//		            osDelay(10);
-//		        }
-//
-//		        sprintf(motor_command, "%s", stop);
-//		        osDelay(500);
-//
-//		        // Step 2: Reverse
-//		        sprintf(motor_command, "%s,%d", reverse, multiplier_obstacle);
-//
-//		        initial_x_pos = x_pos;
-//		        initial_y_pos = y_pos;
-//		        requested_vertical_displacement = 100; // Reverse distance
-//
-//		        while(euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) < requested_vertical_displacement){
-//		            osDelay(10);
-//		        }
-//
-//		        sprintf(motor_command, "%s", stop);
-//		        osDelay(500);
-//
-//		        // Step 3: Forward turn left 90 degrees
-//		        requested_angle = 90;
-//		        offset = -1.5;
-//		        target_Orientation = orientation + requested_angle + offset;
-//
-//		        sprintf(motor_command, "%s", stop);
-//		        Servo_turnLeft();
-//		        osDelay(10);
-//		        sprintf(motor_command, "%s,%d", left, multiplier_obstacle);
-//
-//		        while (orientation < target_Orientation){
-//		            if (orientation > target_Orientation - 35 ){
-//		                multiplier_obstacle = 20;
-//		                sprintf(motor_command, "%s,%d", left, multiplier_obstacle);
-//		            }
-//		            osDelay(3);
-//		        }
-//
-//		        Servo_fixRight();
-//		        sprintf(motor_command, "%s", stop);
-//		        osDelay(500);
-//		        multiplier_obstacle = 200; // Reset multiplier
-//
-//		        // Step 4: Forward turn right 90 degrees
-//		        requested_angle = -90;
-//		        offset = 0.5;
-//		        target_Orientation = orientation + requested_angle + offset;
-//
-//		        sprintf(motor_command, "%s", stop);
-//		        Servo_turnRight();
-//		        osDelay(10);
-//		        sprintf(motor_command, "%s,%d", right, multiplier_obstacle);
-//
-//		        while (orientation > target_Orientation ){
-//		            if (orientation < target_Orientation + 10){
-//		                multiplier_obstacle = 30;
-//		                sprintf(motor_command, "%s,%d", right, multiplier_obstacle);
-//		            }
-//		            osDelay(3);
-//		        }
-//		        Servo_fixLeft();
-//		        sprintf(motor_command,"%s",stop);
-//		        osDelay(500);
-//		        multiplier_obstacle = 200; // Reset multiplier
-//
-//		        // Step 5: Forward turn right 90 degrees again
-//		        requested_angle = -90;
-//		        offset = 0.5;
-//		        target_Orientation = orientation + requested_angle + offset;
-//
-//		        sprintf(motor_command, "%s", stop);
-//		        Servo_turnRight();
-//		        osDelay(10);
-//		        sprintf(motor_command, "%s,%d", right, multiplier_obstacle);
-//
-//		        while (orientation > target_Orientation ){
-//		            if (orientation < target_Orientation + 10){
-//		                multiplier_obstacle = 30;
-//		                sprintf(motor_command, "%s,%d", right, multiplier_obstacle);
-//		            }
-//		            osDelay(3);
-//		        }
-//		        Servo_fixLeft();
-//		        sprintf(motor_command,"%s",stop);
-//		        osDelay(500);
-//		        multiplier_obstacle = 200; // Reset multiplier
-//
-//		        // Step 1: Move forward
-//		        sprintf(motor_command, "%s,%d", forward, multiplier_obstacle);
-//
-//		        initial_x_pos = x_pos;
-//		        initial_y_pos = y_pos;
-//		        requested_vertical_displacement = 15; // Forward distance
-//
-//		        while(euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) < requested_vertical_displacement){
-//		            osDelay(10);
-//		        }
-//
-//		        sprintf(motor_command, "%s", stop);
-//		        osDelay(500);
-//
-//		        // Delay between cycles if more repetitions needed
-//		        if(cycle < repeat_count - 1){
-//		            osDelay(1000);
-//		        }
-//		    }
-//
-//		    sprintf(motor_command, "%s", stop);
-//		    sprintf(command_buffer, "%s", dummy_command_stop);
-//		    UART_send_string(movement_finish);
-//		    sendPosOrienData();
-//		    osDelay(200);
-//		}
+		        while(euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) < requested_vertical_displacement){
+		            osDelay(10);
+		        }
+
+		        sprintf(motor_command, "%s", stop);
+		        osDelay(500);
+
+		        // Step 2: Reverse
+		        sprintf(motor_command, "%s,%d", reverse, multiplier_obstacle);
+
+		        initial_x_pos = x_pos;
+		        initial_y_pos = y_pos;
+		        requested_vertical_displacement = 100; // Reverse distance
+
+		        while(euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) < requested_vertical_displacement){
+		            osDelay(10);
+		        }
+
+		        sprintf(motor_command, "%s", stop);
+		        osDelay(500);
+
+		        // Step 3: Forward turn left 90 degrees
+		        requested_angle = 90;
+		        offset = -1.5;
+		        target_Orientation = orientation + requested_angle + offset;
+
+		        sprintf(motor_command, "%s", stop);
+		        Servo_turnLeft();
+		        osDelay(10);
+		        sprintf(motor_command, "%s,%d", left, multiplier_obstacle);
+
+		        while (orientation < target_Orientation){
+		            if (orientation > target_Orientation - 35 ){
+		                multiplier_obstacle = 20;
+		                sprintf(motor_command, "%s,%d", left, multiplier_obstacle);
+		            }
+		            osDelay(3);
+		        }
+
+		        Servo_fixRight();
+		        sprintf(motor_command, "%s", stop);
+		        osDelay(500);
+		        multiplier_obstacle = 200; // Reset multiplier
+
+		        // Step 4: Forward turn right 90 degrees
+		        requested_angle = -90;
+		        offset = 0.5;
+		        target_Orientation = orientation + requested_angle + offset;
+
+		        sprintf(motor_command, "%s", stop);
+		        Servo_turnRight();
+		        osDelay(10);
+		        sprintf(motor_command, "%s,%d", right, multiplier_obstacle);
+
+		        while (orientation > target_Orientation ){
+		            if (orientation < target_Orientation + 10){
+		                multiplier_obstacle = 30;
+		                sprintf(motor_command, "%s,%d", right, multiplier_obstacle);
+		            }
+		            osDelay(3);
+		        }
+		        Servo_fixLeft();
+		        sprintf(motor_command,"%s",stop);
+		        osDelay(500);
+		        multiplier_obstacle = 200; // Reset multiplier
+
+		        // Step 5: Forward turn right 90 degrees again
+		        requested_angle = -90;
+		        offset = 0.5;
+		        target_Orientation = orientation + requested_angle + offset;
+
+		        sprintf(motor_command, "%s", stop);
+		        Servo_turnRight();
+		        osDelay(10);
+		        sprintf(motor_command, "%s,%d", right, multiplier_obstacle);
+
+		        while (orientation > target_Orientation ){
+		            if (orientation < target_Orientation + 10){
+		                multiplier_obstacle = 30;
+		                sprintf(motor_command, "%s,%d", right, multiplier_obstacle);
+		            }
+		            osDelay(3);
+		        }
+		        Servo_fixLeft();
+		        sprintf(motor_command,"%s",stop);
+		        osDelay(500);
+		        multiplier_obstacle = 200; // Reset multiplier
+
+		        // Step 1: Move forward
+		        sprintf(motor_command, "%s,%d", forward, multiplier_obstacle);
+
+		        initial_x_pos = x_pos;
+		        initial_y_pos = y_pos;
+		        requested_vertical_displacement = 15; // Forward distance
+
+		        while(euclideanDis(x_pos, initial_x_pos, y_pos, initial_y_pos) < requested_vertical_displacement){
+		            osDelay(10);
+		        }
+
+		        sprintf(motor_command, "%s", stop);
+		        osDelay(500);
+
+		        // Delay between cycles if more repetitions needed
+		        if(cycle < repeat_count - 1){
+		            osDelay(1000);
+		        }
+		    }
+
+		    sprintf(motor_command, "%s", stop);
+		    sprintf(command_buffer, "%s", dummy_command_stop);
+		    UART_send_string(movement_finish);
+		    sendPosOrienData();
+		    osDelay(200);
+		}
 
 	  if (strncmp("0", (char*)command_buffer, 1) == 0){
 		  //Below is original code
@@ -2328,7 +2373,7 @@ void motor(void *argument)
 		  target_speed_l = 2.5 * multiplier/100;	//task 2 new
 		  target_speed_r = 0 * multiplier/100 ;
 
-		  Motor_Forward((int)PWM_L, 0.89*(int)PWM_R);
+		  Motor_Forward((int)PWM_L, (int)PWM_R);
 
 	  }
 	  else if (strncmp((char*)motor_command, "reverse", 7) == 0){
@@ -2345,18 +2390,6 @@ void motor(void *argument)
 		  target_speed_r = 2.0 * multiplier/100;
 		  Motor_Forward((int)PWM_L*0.913, (int)PWM_R);
 	  }
-
-	  else if(strncmp((char*)motor_command, "spot_left", 9) == 0){
-	      multiplier = getRequestedMultiplier(motor_command);
-
-	      // Left wheel goes backward, right wheel goes forward
-	      target_speed_l = 2.0 * multiplier/100;
-	      target_speed_r = 2.0 * multiplier/100;
-
-	      Motor_Reverse((int)PWM_L, 0);      // Left backward
-	      Motor_Forward(0, (int)PWM_R);      // Right forward
-	  }
-
 
 	  else if (strncmp((char*)motor_command, "stop", 4) == 0){
 		  PWM_L = 0;
@@ -2470,7 +2503,7 @@ void orientationCal(void *argument)
 //	vTaskDelayUntil(&xLastWakeTime, xPeriod);
 //  }
 
-  static double gyro_bias = -40; // Adjust this value
+  static double gyro_bias = -9; // Adjust this value
 
   orientation = orientation +3 ;
 

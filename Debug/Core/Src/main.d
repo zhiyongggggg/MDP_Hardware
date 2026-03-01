@@ -1,5 +1,5 @@
 Core/Src/main.o: ../Core/Src/main.c \
- /Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/icm20948.h \
+ C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/icm20948.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
@@ -42,12 +42,12 @@ Core/Src/main.o: ../Core/Src/main.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
- /Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/servo.h \
- /Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/oled.h \
- /Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/HCSR04.h \
- /Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/UART_Comm.h \
- /Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/motor.h
-/Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/icm20948.h:
+ C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/servo.h \
+ C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/oled.h \
+ C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/HCSR04.h \
+ C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/UART_Comm.h \
+ C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/motor.h
+C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/icm20948.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 ../Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h:
 ../Drivers/CMSIS/Include/core_cm4.h:
@@ -90,8 +90,8 @@ Core/Src/main.o: ../Core/Src/main.c \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h:
-/Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/servo.h:
-/Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/oled.h:
-/Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/HCSR04.h:
-/Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/UART_Comm.h:
-/Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/motor.h:
+C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/servo.h:
+C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/oled.h:
+C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/HCSR04.h:
+C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/UART_Comm.h:
+C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/motor.h:

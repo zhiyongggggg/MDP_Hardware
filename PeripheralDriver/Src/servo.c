@@ -39,7 +39,7 @@ void Servo_fixRight(){
 }
 
 void Servo_Centre(){
-	(*pwm_timer).Instance->CCR2 = CENTER_SERVO_DUTY;
+	(*pwm_timer).Instance->CCR2 = CENTER_SERVO_DUTY; //-10.9;
 }
 
 void Servo_mildRight(){

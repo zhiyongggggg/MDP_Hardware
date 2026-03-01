@@ -1,5 +1,5 @@
 PeripheralDriver/Src/servo.o: ../PeripheralDriver/Src/servo.c \
- /Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/servo.h \
+ C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/servo.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -30,7 +30,7 @@ PeripheralDriver/Src/servo.o: ../PeripheralDriver/Src/servo.c \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
-/Users/yh/Downloads/MDP_task_1\ 2/PeripheralDriver/Inc/servo.h:
+C:/Users/yongk/Desktop/2026\ SEM\ 2/MDF/references/zhiyong\ turn\ code/MDP_task_1\ 2/PeripheralDriver/Inc/servo.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h:

@@ -5,7 +5,7 @@ static TIM_HandleTypeDef* encoderL_timer_s;
 static TIM_HandleTypeDef* encoderR_timer_s;
 
 #define MAX_MOTOR_DUTY 8400 // 50%
-#define MIN_MOTOR_DUTY 200 // 2.4%
+#define MIN_MOTOR_DUTY 220 // 2.4%
 #define COUNTER_RESET_VALUE 2147483647
 
 static uint32_t time_elapsed = 0x00;

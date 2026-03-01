@@ -68,8 +68,8 @@ all: main-build
 main-build: MDP_task_1.elf secondary-outputs
 
 # Tool invocations
-MDP_task_1.elf MDP_task_1.map: $(OBJS) $(USER_OBJS) /Users/yh/Downloads/MDP_task_1\ 2/STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "MDP_task_1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/yh/Downloads/MDP_task_1 2/STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MDP_task_1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+MDP_task_1.elf MDP_task_1.map: $(OBJS) $(USER_OBJS) C:\Users\yongk\Desktop\2026\ SEM\ 2\MDF\references\zhiyong\ turn\ code\MDP_task_1\ 2\STM32F407VETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "MDP_task_1.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\yongk\Desktop\2026 SEM 2\MDF\references\zhiyong turn code\MDP_task_1 2\STM32F407VETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="MDP_task_1.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
